@@ -1,5 +1,7 @@
 package fr.aelion.agedi.springdemo.person.services;
 
+import fr.aelion.agedi.springdemo.exceptions.BadContentException;
+import fr.aelion.agedi.springdemo.exceptions.EntityNotFoundException;
 import fr.aelion.agedi.springdemo.person.entities.Person;
 import fr.aelion.agedi.springdemo.person.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,17 @@ public class PersonService {
         return this.personRepo.findAll();
     }
 
-    public Optional<Person> findById(Long id) {
-        return this.personRepo.findById(id);
+    public Person findById(Long id) throws BadContentException, EntityNotFoundException {
+        this.validateIdOrThrowsBadContentException(id);
+        // java optional
+        return this.personRepo.findById(id).orElseThrow(EntityNotFoundException::new);
     }
+
+    public void validateIdOrThrowsBadContentException(Long id) throws BadContentException {
+        if(id < 100) {
+            throw new BadContentException();
+        }
+    }
+
+
 }

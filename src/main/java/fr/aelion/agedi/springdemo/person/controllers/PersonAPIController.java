@@ -1,15 +1,16 @@
 package fr.aelion.agedi.springdemo.person.controllers;
 
+import fr.aelion.agedi.springdemo.exceptions.ApiError;
+import fr.aelion.agedi.springdemo.exceptions.BadContentException;
+import fr.aelion.agedi.springdemo.exceptions.EntityNotFoundException;
+import fr.aelion.agedi.springdemo.exceptions.GlobalException;
 import fr.aelion.agedi.springdemo.person.entities.Person;
 import fr.aelion.agedi.springdemo.person.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/person")
@@ -32,9 +33,12 @@ public class PersonAPIController {
      * @param id
      * @return
      */
-    @GetMapping("")
-    public Person get(@PathVariable("id") Long id) {
-        // orElseThrow , etc..
-        return this.personSrv.findById(id).get();
+    @GetMapping("/{id}")
+    // required = false => SIMULATION
+    public Person get(@PathVariable(value = "id") Long id)
+            throws BadContentException, EntityNotFoundException {
+        // orElseThrow , etc.
+        return this.personSrv.findById(id);
     }
+
 }

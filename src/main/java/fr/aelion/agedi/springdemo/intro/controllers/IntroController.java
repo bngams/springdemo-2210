@@ -53,4 +53,5 @@ public class IntroController {
     public Double getRandom() {
         return this.is.getRandom();
     }
+
 }
