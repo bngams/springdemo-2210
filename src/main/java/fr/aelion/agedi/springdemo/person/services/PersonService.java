@@ -32,7 +32,7 @@ public class PersonService {
     }
 
     public void validateIdOrThrowsBadContentException(Long id) throws BadContentException {
-        if(id < 100) {
+        if(id < 10) {
             throw new BadContentException();
         }
     }

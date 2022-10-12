@@ -1,6 +1,7 @@
 package fr.aelion.agedi.springdemo.intro.controllers;
 
 import fr.aelion.agedi.springdemo.intro.services.IntroService;
+import lombok.Getter;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,8 @@ import javax.annotation.PostConstruct;
 // servlet
 @Controller
 public class IntroController {
+    @Getter
+    private Boolean initialized = false;
     // @Autowired => if attribute is private => @Autowired and DI in constructor
     private IntroService is;
 
@@ -37,6 +40,7 @@ public class IntroController {
     void init() {
         log.info("IntroController init @PostConstruct");
         // replace init instructions from constructor
+        this.initialized = true;
     }
 
     // servlet method
